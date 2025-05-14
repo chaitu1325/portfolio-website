@@ -47,26 +47,89 @@
       </div>
       
       <div class="col-lg-7">
-        <form class="contact-form">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+          <!-- Success message -->
+          <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert">
+            Your message has been sent successfully!
+            <button type="button" class="btn-close" (click)="resetForm()" aria-label="Close"></button>
+          </div>
+          
+          <!-- Error message -->
+          <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ errorMessage }}
+            <button type="button" class="btn-close" (click)="error = false" aria-label="Close"></button>
+          </div>
+          
           <div class="row">
             <div class="col-md-6 form-group">
-              <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+              <input 
+                type="text" 
+                formControlName="name"
+                class="form-control" 
+                [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
+                placeholder="Your Name">
+              <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                <div *ngIf="f['name'].errors['required']">Name is required</div>
+                <div *ngIf="f['name'].errors['minlength']">Name must be at least 2 characters</div>
+              </div>
             </div>
             <div class="col-md-6 form-group mt-3 mt-md-0">
-              <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+              <input 
+                type="email" 
+                formControlName="email"
+                class="form-control" 
+                [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+                placeholder="Your Email">
+              <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                <div *ngIf="f['email'].errors['required']">Email is required</div>
+                <div *ngIf="f['email'].errors['email']">Please enter a valid email address</div>
+              </div>
             </div>
           </div>
           <div class="form-group mt-3">
-            <input type="text" class="form-control" id="subject" placeholder="Subject" required>
+            <input 
+              type="text" 
+              formControlName="subject"
+              class="form-control" 
+              [ngClass]="{ 'is-invalid': submitted && f['subject'].errors }"
+              placeholder="Subject">
+            <div *ngIf="submitted && f['subject'].errors" class="invalid-feedback">
+              <div *ngIf="f['subject'].errors['required']">Subject is required</div>
+            </div>
           </div>
           <div class="form-group mt-3">
-            <textarea class="form-control" rows="5" placeholder="Message" required></textarea>
+            <textarea 
+              formControlName="message"
+              class="form-control" 
+              [ngClass]="{ 'is-invalid': submitted && f['message'].errors }"
+              rows="5" 
+              placeholder="Message"></textarea>
+            <div *ngIf="submitted && f['message'].errors" class="invalid-feedback">
+              <div *ngIf="f['message'].errors['required']">Message is required</div>
+              <div *ngIf="f['message'].errors['minlength']">Message must be at least 10 characters</div>
+            </div>
           </div>
           <div class="text-center mt-4">
-            <button type="submit" class="btn btn-primary">Send Message</button>
+            <button 
+              type="submit" 
+              class="btn btn-primary" 
+              [disabled]="loading"
+              trackEvent="contact_form_click"
+              eventCategory="engagement"
+              eventLabel="Contact Form Button">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+              Send Message
+            </button>
           </div>
         </form>
       </div>
     </div>
+    
+    <!-- EmailJS Test Component - Remove this in production -->
+    <!-- <div class="row mt-5" *ngIf="!environment.production">
+      <div class="col-12">
+        <app-email-test></app-email-test>
+      </div>
+    </div> -->
   </div>
 </section>

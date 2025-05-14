@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'bootstrap/scss/bootstrap';
+@use 'bootstrap/scss/bootstrap';
+@use 'sass:color';
 
 :root {
   --primary-color: #0563bb;
@@ -57,7 +58,7 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--primary-color);
   
   &:hover {
-    background-color: darken(#0563bb, 10%);
-    border-color: darken(#0563bb, 10%);
+    background-color: color.adjust(#0563bb, $lightness: -10%);
+    border-color: color.adjust(#0563bb, $lightness: -10%);
   }
 }

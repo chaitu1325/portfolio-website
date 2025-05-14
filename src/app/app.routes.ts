@@ -5,6 +5,7 @@ import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { SkillsComponent } from './components/skills/skills.component';
 import { EducationComponent } from './components/education/education.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { ServicesComponent } from './components/services/services.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,6 +13,7 @@ export const routes: Routes = [
   { path: 'portfolio', component: PortfolioComponent },
   { path: 'skills', component: SkillsComponent },
   { path: 'education', component: EducationComponent },
+  { path: 'services', component: ServicesComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'home', component: HomeComponent },
   { path: 'experience', redirectTo: 'portfolio', pathMatch: 'full' }, // Redirect old experience URL to portfolio

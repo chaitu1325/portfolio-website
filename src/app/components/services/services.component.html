@@ -1,0 +1,25 @@
+<section class="services-section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Services</h2>
+      <p>What I Offer</p>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 col-md-6" *ngFor="let service of services">
+        <div class="service-box">
+          <div class="service-icon">
+            <i [class]="service.icon"></i>
+          </div>
+          <h3>{{ service.title }}</h3>
+          <p>{{ service.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-container text-center mt-5">
+      <p class="mb-4">Interested in working together? Let's discuss your project requirements.</p>
+      <a routerLink="/contact" class="btn btn-primary">Contact Me</a>
+    </div>
+  </div>
+</section>
