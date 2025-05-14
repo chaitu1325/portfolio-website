@@ -1,0 +1,119 @@
+.education-section {
+  padding: 80px 0;
+  background-color: var(--light-gray);
+}
+
+.education-card {
+  display: flex;
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  padding: 30px;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+  
+  .education-icon {
+    font-size: 48px;
+    color: var(--primary-color);
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .education-content {
+    h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text-color);
+    }
+    
+    h4 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+    
+    .institution, .university {
+      font-size: 16px;
+      margin-bottom: 5px;
+      color: var(--text-color);
+    }
+    
+    .university {
+      font-style: italic;
+    }
+  }
+}
+
+.education-details {
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  padding: 30px;
+  
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+  }
+  
+  .education-skills-list {
+    list-style: none;
+    padding-left: 0;
+    
+    li {
+      position: relative;
+      padding-left: 25px;
+      margin-bottom: 10px;
+      
+      &:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.education-quote {
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  padding: 30px;
+  
+  blockquote {
+    border-left: 4px solid var(--primary-color);
+    padding-left: 20px;
+    font-style: italic;
+    font-size: 18px;
+    
+    p {
+      margin: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .education-card {
+    flex-direction: column;
+    
+    .education-icon {
+      margin-right: 0;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    
+    .education-content {
+      text-align: center;
+    }
+  }
+}

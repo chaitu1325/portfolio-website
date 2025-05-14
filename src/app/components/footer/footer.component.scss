@@ -1,0 +1,38 @@
+.footer {
+  background-color: var(--dark-gray);
+  color: var(--white);
+  padding: 30px 0;
+  
+  .social-links {
+    margin-bottom: 20px;
+    
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      margin: 0 10px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-3px);
+      }
+      
+      i {
+        font-size: 18px;
+      }
+    }
+  }
+  
+  .copyright {
+    p {
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+}
