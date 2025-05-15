@@ -12,16 +12,8 @@ export class AnalyticsService {
   private isEnabled: boolean;
 
   constructor(private router: Router) {
-    // Check if user has a saved preference
-    const savedPreference = localStorage.getItem('analytics-enabled');
-    
-    if (savedPreference !== null) {
-      // Use the user's saved preference
-      this.isEnabled = savedPreference === 'true';
-    } else {
-      // Use the default from environment
-      this.isEnabled = environment.googleAnalytics.enabled;
-    }
+    // Use the setting from environment
+    this.isEnabled = environment.googleAnalytics.enabled;
     
     // Subscribe to router events to track page views (will only track if enabled)
     this.router.events.pipe(
@@ -74,20 +66,5 @@ export class AnalyticsService {
     }
   }
   
-  /**
-   * Check if Google Analytics is enabled
-   * @returns boolean indicating if GA is enabled
-   */
-  isAnalyticsEnabled(): boolean {
-    return this.isEnabled;
-  }
-  
-  /**
-   * Enable or disable Google Analytics
-   * @param enabled Boolean to enable or disable analytics
-   */
-  setAnalyticsEnabled(enabled: boolean): void {
-    this.isEnabled = enabled;
-    console.log(`Google Analytics ${enabled ? 'enabled' : 'disabled'}`);
-  }
+  // No toggle methods needed
 }
