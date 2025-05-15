@@ -6,6 +6,7 @@ export const environment = {
     templateId: 'template_dtsgav5' // Your EmailJS template ID
   },
   googleAnalytics: {
-    measurementId: 'G-62GFBR8Q56' // Replace with your actual GA4 Measurement ID
+    enabled: true, // Set to false to disable Google Analytics
+    measurementId: 'G-62GFBR8Q56' // Your actual GA4 Measurement ID
   }
 };

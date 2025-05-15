@@ -19,16 +19,7 @@ export class AppComponent implements OnInit {
   private analyticsService = inject(AnalyticsService);
   
   ngOnInit() {
-    this.initializeGoogleAnalytics();
-  }
-
-  private initializeGoogleAnalytics(): void {
-    if (typeof gtag === 'function') {
-      const measurementId = environment.googleAnalytics.measurementId;
-      gtag('config', measurementId);
-      console.log('Google Analytics initialized with Measurement ID:', measurementId);
-    } else {
-      console.warn('Google Analytics not loaded');
-    }
+    // The AnalyticsService is already initialized via dependency injection
+    // No need to manually initialize Google Analytics here
   }
 }

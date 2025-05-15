@@ -35,4 +35,32 @@
       font-size: 14px;
     }
   }
+  
+  .privacy-controls {
+    max-width: 400px;
+    margin: 0 auto;
+    
+    app-analytics-toggle {
+      display: block;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 5px;
+      padding: 10px;
+      
+      ::ng-deep {
+        .analytics-toggle {
+          background-color: transparent;
+          color: var(--white);
+          margin: 0;
+          
+          .form-check-label, .text-muted {
+            color: var(--white) !important;
+          }
+          
+          .text-muted {
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+  }
 }

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { AnalyticsToggleComponent } from '../analytics-toggle/analytics-toggle.component';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [],
+  imports: [AnalyticsToggleComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
