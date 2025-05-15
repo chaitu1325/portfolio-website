@@ -1,6 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
-@use 'bootstrap/scss/bootstrap';
+// Import only the Bootstrap components we need
 @use 'sass:color';
+
+// Required Bootstrap imports
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+
+// Optional components - comment out what you don't use
+@import 'bootstrap/scss/root';
+@import 'bootstrap/scss/reboot';
+@import 'bootstrap/scss/type';
+@import 'bootstrap/scss/containers';
+@import 'bootstrap/scss/grid';
+@import 'bootstrap/scss/buttons';
+@import 'bootstrap/scss/nav';
+@import 'bootstrap/scss/navbar';
+@import 'bootstrap/scss/card';
+@import 'bootstrap/scss/forms';
+
+// Utilities
+@import 'bootstrap/scss/utilities/api';
 
 :root {
   --primary-color: #0563bb;
