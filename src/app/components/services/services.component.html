@@ -6,20 +6,24 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-4 col-md-6" *ngFor="let service of services">
-        <div class="service-box">
+      <div class="col-lg-4 col-md-6 mb-4" *ngFor="let service of services">
+        <div class="service-card">
           <div class="service-icon">
             <i [class]="service.icon"></i>
           </div>
-          <h3>{{ service.title }}</h3>
-          <p>{{ service.description }}</p>
+          <h3 class="service-title" [innerHTML]="service.title"></h3>
+          <p class="service-description">{{ service.description }}</p>
+          <div class="service-action">
+            <a [routerLink]="['/contact']" [queryParams]="{service: service.plainTitle || service.title}" class="btn btn-service">Book Now</a>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="cta-container text-center mt-5">
+    <div class="custom-services text-center mt-5">
+      <h3>Need a custom service?</h3>
       <p class="mb-4">Interested in working together? Let's discuss your project requirements.</p>
-      <a routerLink="/contact" class="btn btn-primary">Contact Me</a>
+      <a [routerLink]="['/contact']" [queryParams]="{service: 'Custom Service'}" class="btn btn-primary">Contact Me</a>
     </div>
   </div>
 </section>

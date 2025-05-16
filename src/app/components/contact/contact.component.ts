@@ -6,6 +6,7 @@ import { EmailService } from '../../services/email.service';
 import { environment } from '../../../environments/environment';
 import { AnalyticsService } from '../../services/analytics.service';
 import { TrackEventDirective } from '../../directives/track-event.directive';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-contact',
@@ -27,7 +28,8 @@ export class ContactComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private emailService: EmailService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +38,21 @@ export class ContactComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       subject: ['', Validators.required],
       message: ['', [Validators.required, Validators.minLength(10)]]
+    });
+    
+    // Check for query parameters to pre-populate the form
+    this.route.queryParams.subscribe(params => {
+      if (params['service']) {
+        // Pre-populate subject field with service name
+        this.contactForm.patchValue({
+          subject: `Inquiry about ${params['service']}`
+        });
+        
+        // Pre-populate message field with service-specific content
+        this.contactForm.patchValue({
+          message: `I'm interested in your "${params['service']}" service. Please provide more information.`
+        });
+      }
     });
   }
 

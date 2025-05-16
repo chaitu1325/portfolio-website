@@ -6,6 +6,7 @@ interface Service {
   icon: string;
   title: string;
   description: string;
+  plainTitle?: string;
 }
 
 @Component({
@@ -17,6 +18,22 @@ interface Service {
 })
 export class ServicesComponent {
   services: Service[] = [
+    {
+      icon: 'bi bi-person-video',
+      title: '<span class="one-on-one">1:1</span> Technical Consultation',
+      plainTitle: '1:1 Technical Consultation',
+      description: 'Personalized technical guidance and problem-solving sessions for your Java/Spring projects. Get expert advice on architecture, design patterns, and best practices.'
+    },
+    {
+      icon: 'bi bi-mortarboard',
+      title: 'Mentorship Program',
+      description: 'Structured mentorship to accelerate your Java development skills and career growth with regular sessions, personalized learning paths, and hands-on project guidance.'
+    },
+    {
+      icon: 'bi bi-people',
+      title: 'Mock Interviews',
+      description: 'Comprehensive preparation for Java developer interviews including algorithm problem-solving, system design practice, and personalized feedback to help you succeed.'
+    },
     {
       icon: 'bi bi-code-slash',
       title: 'Java Development',
