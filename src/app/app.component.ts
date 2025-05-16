@@ -5,8 +5,6 @@ import { FooterComponent } from './components/footer/footer.component';
 import { environment } from '../environments/environment';
 import { AnalyticsService } from './services/analytics.service';
 
-declare const gtag: Function;
-
 @Component({
   selector: 'app-root',
   standalone: true,
