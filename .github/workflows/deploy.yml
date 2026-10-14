@@ -1,4 +1,5 @@
-name: Build and Deploy Portfolio
+
+name: Deploy Portfolio to OCI
 
 on:
   workflow_dispatch:
@@ -7,11 +8,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: portfolio-deployment
+  group: portfolio-production-deploy
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
+    name: Build and Deploy Angular Portfolio
     runs-on: ubuntu-latest
 
     steps:
@@ -27,39 +29,68 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Angular production application
-        run: npm run build -- --configuration production
+      - name: Build Angular application
+        run: npm run build
 
-      - name: Verify production output
-        run: test -f docs/index.html
-
-      - name: Prepare SSH
-        if: github.event_name != 'pull_request'
-        env:
-          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          SERVER_KNOWN_HOSTS: ${{ secrets.SERVER_KNOWN_HOSTS }}
+      - name: Verify build output
         run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          printf '%s\n' "$SERVER_SSH_KEY" > ~/.ssh/id_ed25519
+          test -f docs/index.html
+          echo "Angular build output verified."
+
+      - name: Package website
+        run: tar -czf site.tar.gz -C docs .
+
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SERVER_KNOWN_HOSTS }}
+        run: |
+          set -eu
+          install -m 700 -d ~/.ssh
+
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          printf '%s\n' "$SERVER_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
-      - name: Deploy to Oracle Cloud
-        if: github.event_name != 'pull_request'
+      - name: Upload website package
         env:
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
         run: |
-          set -euo pipefail
+          set -eu
+
+          scp -P "$SERVER_PORT" \
+            site.tar.gz \
+            "$SERVER_USER@$SERVER_HOST:/tmp/portfolio-site.tar.gz"
+
+      - name: Prepare deployment directory
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+        run: |
+          set -eu
 
           ssh -p "$SERVER_PORT" \
             "$SERVER_USER@$SERVER_HOST" \
-            'mkdir -p /var/www/apps/portfolio-website'
+            'sudo install -d -o opc -g opc /usr/share/nginx/html/portfolio-website'
 
-          rsync -az --delete \
-            -e "ssh -p $SERVER_PORT" \
-            docs/ \
-            "$SERVER_USER@$SERVER_HOST:/var/www/apps/portfolio-website/"
+      - name: Deploy website
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+        run: |
+          set -eu
+
+          ssh -p "$SERVER_PORT" \
+            "$SERVER_USER@$SERVER_HOST" \
+            'set -eu
+             sudo tar -tzf /tmp/portfolio-site.tar.gz >/dev/null
+             tar -xzf /tmp/portfolio-site.tar.gz -C /usr/share/nginx/html/portfolio-website
+             test -f /usr/share/nginx/html/portfolio-website/index.html
+             rm -f /tmp/portfolio-site.tar.gz
+             echo "Portfolio deployment completed successfully."'
